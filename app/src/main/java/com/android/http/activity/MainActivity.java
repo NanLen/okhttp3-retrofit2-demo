@@ -5,17 +5,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.android.http.R;
-import com.android.http.bean.WeatherResponse;
-import com.android.http.request.RestBuilder;
+import com.android.http.response.WeatherResponse;
+import com.android.http.response.bean.Weather;
 import com.android.http.service.WeatherService;
+import com.android.library.builder.RestServiceBuilder;
+import com.android.library.callback.RequestCallback;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView tvWeatherInfo;
+
+    private Call<WeatherResponse> call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,20 +29,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getWeather() {
-        WeatherService service = RestBuilder.build(WeatherService.class);
-        service.getWeather().enqueue(new Callback<WeatherResponse>() {
+        WeatherService service = RestServiceBuilder.buildService(WeatherService.class);
+        call = service.getWeather("上海");
+        call.enqueue(new RequestCallback<WeatherResponse>(this) {
             @Override
-            public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
-                WeatherResponse.WeatherInfo weatherInfo = response.body().getWeatherInfo();
-                tvWeatherInfo.setText(weatherInfo.getCity() + weatherInfo.getWD());
+            public void onSuccess(Call<WeatherResponse> call, Response<WeatherResponse> response) {
+                Weather weather = response.body().getRetData();
+                tvWeatherInfo.setText(weather.getCity() + weather.getWeather());
             }
 
             @Override
-            public void onFailure(Call<WeatherResponse> call, Throwable t) {
+            public void onError(Call<WeatherResponse> call, String error) {
+                tvWeatherInfo.setText(error);
 
             }
         });
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (call != null && call.isExecuted()) {
+            call.cancel();
+        }
+    }
 }

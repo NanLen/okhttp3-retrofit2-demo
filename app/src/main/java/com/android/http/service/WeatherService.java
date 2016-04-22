@@ -1,15 +1,24 @@
 package com.android.http.service;
 
-import com.android.http.bean.WeatherResponse;
+
+import com.android.http.response.WeatherResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
+ * 业务接口类
  * Created by liyanan on 16/4/21.
  */
 public interface WeatherService {
 
-    @GET("/data/sk/101010100.html")
-    Call<WeatherResponse> getWeather();
+    /**
+     * 获取某个城市的天气
+     *
+     * @param cityName
+     * @return
+     */
+    @GET("weatherservice/cityname")
+    Call<WeatherResponse> getWeather(@Query("cityname") String cityName);
 }
