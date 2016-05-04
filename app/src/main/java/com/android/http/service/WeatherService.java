@@ -6,6 +6,7 @@ import com.android.http.response.WeatherResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import rx.Observable;
 
 /**
  * 业务接口类
@@ -21,4 +22,7 @@ public interface WeatherService {
      */
     @GET("weatherservice/cityname")
     Call<WeatherResponse> getWeather(@Query("cityname") String cityName);
+
+    @GET("weatherservice/cityname")
+    Observable<WeatherResponse> getRxWeather(@Query("cityname") String cityName);
 }

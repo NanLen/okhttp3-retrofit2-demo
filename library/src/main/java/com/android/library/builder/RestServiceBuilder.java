@@ -3,6 +3,7 @@ package com.android.library.builder;
 import com.android.library.config.RestConfig;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -16,6 +17,7 @@ public class RestServiceBuilder {
                 //此处解析器可自由替换
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(RestClientBuilder.buildClient())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build()
                 .create(service);
     }

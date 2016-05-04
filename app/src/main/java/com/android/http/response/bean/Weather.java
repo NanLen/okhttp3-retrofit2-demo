@@ -179,4 +179,22 @@ public class Weather {
     public void setSunset(String sunset) {
         this.sunset = sunset;
     }
+
+    @Override
+    public String toString() {
+        return "city:" + city + "\n"
+                + "pinyin:" + pinyin + "\n"
+                + "citycode:" + citycode + "\n"
+                + "date:" + date + "\n"
+                + "time:" + time + "\n"
+                + "postCode:" + postCode + "\n"
+                + "longitude:" + longitude + "\n"
+                + "latitude:" + latitude + "\n"
+                + "altitude:" + altitude + "\n"
+                + "weather:" + weather + "\n"
+                + "temp:" + temp + "\n"
+                + "WD:" + WD + "\n"
+                + "WS:" + WS + "\n"
+                + "sunrise:" + sunrise + "\n";
+    }
 }
