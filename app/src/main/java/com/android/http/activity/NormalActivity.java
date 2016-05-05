@@ -40,11 +40,10 @@ public class NormalActivity extends AppCompatActivity {
     private void getWeather() {
         WeatherService service = RestServiceBuilder.buildService(WeatherService.class);
         call = service.getWeather(city);
-        call.enqueue(new RequestCallback<WeatherResponse>() {
+        call.enqueue(new RequestCallback<WeatherResponse>(this) {
             @Override
             public void onSuccess(Call<WeatherResponse> call, Response<WeatherResponse> response) {
-                Weather weather = response.body().getRetData();
-                tvWeatherInfo.setText(weather.toString());
+                tvWeatherInfo.setText(response.body().getRetData().toString());
             }
 
             @Override

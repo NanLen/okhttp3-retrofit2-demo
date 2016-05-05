@@ -9,6 +9,7 @@ import com.android.http.response.WeatherResponse;
 import com.android.http.response.bean.Weather;
 import com.android.http.service.WeatherService;
 import com.android.library.builder.RestServiceBuilder;
+import com.android.library.observer.RequestObserver;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,23 +40,20 @@ public class RxJavaActivity extends AppCompatActivity {
 
     private void getWeather() {
         WeatherService service = RestServiceBuilder.buildService(WeatherService.class);
-        subscription.add(service.getRxWeather(city).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<WeatherResponse>() {
-            @Override
-            public void onCompleted() {
+        subscription.add(service.getRxWeather(city)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RequestObserver<WeatherResponse>() {
+                    @Override
+                    public void onSuccess(WeatherResponse weatherResponse) {
+                        tvWeatherInfo.setText(weatherResponse.getRetData().toString());
+                    }
 
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(WeatherResponse weatherResponse) {
-                Weather weather = weatherResponse.getRetData();
-                tvWeatherInfo.setText(weather.toString());
-            }
-        }));
+                    @Override
+                    public void onError(String error) {
+                        tvWeatherInfo.setText(error);
+                    }
+                }));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.android.library.callback;
+package com.android.library.observer;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -8,25 +8,23 @@ import com.android.library.constant.RequestConstant;
 import java.lang.ref.WeakReference;
 
 /**
- * 请求回调
- * Created by liyanan on 16/4/22.
+ * Created by liyanan on 16/5/5.
  */
-public abstract class RequestCallback<T> extends CallbackImpl<T> {
-
+public abstract class RequestObserver<T> extends ObserverImpl<T> {
     private WeakReference<Activity> activityWeakReference;
     private WeakReference<Fragment> fragmentWeakReference;
     private int type = RequestConstant.REQUEST_FROM_DEFAULT;
 
-    public RequestCallback() {
+    public RequestObserver() {
 
     }
 
-    public RequestCallback(Activity activity) {
+    public RequestObserver(Activity activity) {
         activityWeakReference = new WeakReference<>(activity);
         type = RequestConstant.REQUEST_FROM_ACTIVITY;
     }
 
-    public RequestCallback(Fragment fragment) {
+    public RequestObserver(Fragment fragment) {
         fragmentWeakReference = new WeakReference<>(fragment);
         type = RequestConstant.REQUEST_FROM_FRAGMENT;
     }
