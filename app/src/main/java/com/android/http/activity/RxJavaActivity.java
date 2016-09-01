@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.android.http.R;
 import com.android.http.response.WeatherResponse;
-import com.android.http.response.bean.Weather;
 import com.android.http.service.WeatherService;
 import com.android.library.builder.RestServiceBuilder;
 import com.android.library.observer.RequestObserver;
@@ -14,8 +13,6 @@ import com.android.library.observer.RequestObserver;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import retrofit2.Call;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;

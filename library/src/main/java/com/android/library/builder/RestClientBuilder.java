@@ -1,6 +1,7 @@
 package com.android.library.builder;
 
 import com.android.library.interceptor.RequestInterceptor;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +24,7 @@ public class RestClientBuilder {
         return new OkHttpClient.Builder()
                 .addInterceptor(new RequestInterceptor())
                 .addInterceptor(loggingInterceptor)
+                .addNetworkInterceptor(new StethoInterceptor())
                 .retryOnConnectionFailure(true)
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)

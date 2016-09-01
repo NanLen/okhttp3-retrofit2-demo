@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.android.http.R;
 import com.android.http.response.WeatherResponse;
-import com.android.http.response.bean.Weather;
 import com.android.http.service.WeatherService;
 import com.android.library.builder.RestServiceBuilder;
 import com.android.library.callback.RequestCallback;
